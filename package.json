@@ -2,7 +2,7 @@
   "name": "habituate",
   "version": "1.0.0",
   "description": "Points-based app to help build good habits",
-  "main": "index.js",
+  "main": "server/index.js",
   "dependencies": {
     "express": "^4.13.3"
   },
