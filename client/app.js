@@ -6,8 +6,8 @@ angular.module('app', ['services'])
 .controller('goalCtrl', function($scope, Goals) {
   //get all goals
   Goals.getAll()
-  .then(function(goals) {
-    console.log(goals);
+  .then(function(resp) {
+    console.log(resp.data);
   });
 
   //temp properties used in view to store info for the new goal
