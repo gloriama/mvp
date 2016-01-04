@@ -2,9 +2,9 @@ GOALS:
 
 create goal:
   name of goal
-  frequency: number of times per day/week/month you want to do it
+  frequency: number of times per (day/)week(/month) you want to do it
   points earned per time
-  how many times do you do it in a row until you get a free pass?
+  (how many times do you do it in a row until you get a free pass?)
 
 view goals:
   total points at the top
