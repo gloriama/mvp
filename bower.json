@@ -1,0 +1,23 @@
+{
+  "name": "habituate",
+  "description": "Points-based app to help build good habits",
+  "main": "index.js",
+  "authors": [
+    "Gloria Ma"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/gloriama/2015-11-mvp",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.8",
+    "angular-route": "~1.4.8",
+    "angular-mocks": "~1.4.8"
+  }
+}
