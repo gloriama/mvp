@@ -1,6 +1,6 @@
 angular.module('services', [])
 .factory('Goals', function($http) {
-  var add =function(goal) {
+  var add = function(goal) {
     console.log('adding goal');
     return $http({
       method: 'POST',
@@ -9,7 +9,16 @@ angular.module('services', [])
     });
   };
 
+  var getAll = function() {
+    console.log('getting all goals');
+    return $http({
+      method: 'GET',
+      url: '/goals',
+    });
+  }
+
   return {
-    add: add
+    add: add,
+    getAll: getAll
   };
 });

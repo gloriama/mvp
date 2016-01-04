@@ -8,6 +8,10 @@ mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/habituate');
 
 app.set('port', process.env.PORT || 8000);
 
+app.get('/goals', function(req, res) {
+  console.log('got get request!');
+});
+
 app.post('/goals', function(req, res) {
   console.log('got post request!');
 });

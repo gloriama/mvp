@@ -4,6 +4,12 @@ var DEFAULT_GOAL_POINTS = 10;
 
 angular.module('app', ['services'])
 .controller('goalCtrl', function($scope, Goals) {
+  //get all goals
+  Goals.getAll()
+  .then(function(goals) {
+    console.log(goals);
+  });
+
   //temp properties used in view to store info for the new goal
   $scope.goalName = DEFAULT_GOAL_NAME;
   $scope.goalFreq = DEFAULT_GOAL_FREQ;
