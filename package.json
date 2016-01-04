@@ -1,0 +1,21 @@
+{
+  "name": "habituate",
+  "version": "1.0.0",
+  "description": "Points-based app to help build good habits",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gloriama/2015-11-mvp.git"
+  },
+  "author": "Gloria Ma",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gloriama/2015-11-mvp/issues"
+  },
+  "homepage": "https://github.com/gloriama/2015-11-mvp#readme"
+}
