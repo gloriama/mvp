@@ -18,27 +18,34 @@ Once the project moves into development, the press release can be used as a touc
  
 ## Heading ##
   > Name the product in a way the reader (i.e. your target customers) will understand.
-
+  Habituate
 ## Sub-Heading ##
   > Describe who the market for the product is and what benefit they get. One sentence only underneath the title.
-
+  College students and young adults trying to develop healthier habits.
 ## Summary ##
   > Give a summary of the product and the benefit. Assume the reader will not read anything else so make this paragraph good.
+  It's hard being an adult. There are lots of things we know we should start doing for our own sake, but we can never stick to them because it just doesn't feel rewarding or fun to do day after day. Turn habit-building into a simple game where you can earn points for being productive.
 
 ## Problem ##
   > Describe the problem your product solves.
+  People struggle a lot with building good life habits, like remembering to floss, finding the motivation to head to the gym, and sitting with better posture.
 
 ## Solution ##
   > Describe how your product elegantly solves the problem.
+  Habituate will help take care of tracking your goals for you and turn your efforts into points. With some additional features that make it fun to use, Habituate will make you feel excited to work on your habits.
 
 ## Quote from You ##
   > A quote from a spokesperson in your company.
+  "Get Habituated"
 
 ## How to Get Started ##
   > Describe how easy it is to get started.
+  Head over to [url] and start entering your goals and earning points! Each time you perform a habit, you can earn points toward allowing you to take a free day without guilt, or earning other rewards for yourself.
 
 ## Customer Quote ##
   > Provide a quote from a hypothetical customer that describes how they experienced the benefit.
+  "My gums have never been healthier"
 
 ## Closing and Call to Action ##
   > Wrap it up and give pointers where the reader should go next.
+  Head over to [url] and start improving your life one habit at a time.
