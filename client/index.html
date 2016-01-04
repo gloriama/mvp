@@ -1,6 +1,7 @@
 <!doctype html>
 <html ng-app="app">
   <head>
+    <link rel="stylesheet" href="styles.css">
     <script src="lib/angular/angular.js"></script>
     <script src="lib/angular-route/angular-route.js"></script>
     <script src="app.js"></script>
@@ -10,10 +11,17 @@
     <input ng-model="goalFreq"/>
     <input ng-model="goalPoints"/>
     <button ng-click="add()">Submit</button>
-    <ul>
-      <li ng-repeat="item in storage">
-        {{ item }}
-      </li>
-    </ul>
+    <table border="1">
+      <tr>
+        <th>Name</th>
+        <th>Times per week</th>
+        <th>Points per time</th>
+      </tr>
+      <tr ng-repeat="goal in storage">
+        <td>{{ goal.name }}</td>
+        <td>{{ goal.freq }}</td>
+        <td>{{ goal.points }}</td>
+      </tr>
+    </table>
   </body>
 </html>
