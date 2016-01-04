@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 var app = express();
 
 //connect to mongo database named "habituate"
-mongoose.connect('mongodb://localhost/habituate');
+mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/habituate');
 
 app.set('port', process.env.PORT || 8000);
 
