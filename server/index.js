@@ -8,6 +8,10 @@ mongoose.connect('mongodb://localhost/habituate');
 
 app.set('port', process.env.PORT || 8000);
 
+app.post('/goals', function(req, res) {
+  console.log('got post request!');
+});
+
 app.use(express.static(__dirname + '/../client'));
 
 app.listen(app.get('port'), function() {
