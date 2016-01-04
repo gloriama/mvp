@@ -1,0 +1,29 @@
+GOALS:
+
+create goal:
+  name of goal
+  frequency: number of times per day/week/month you want to do it
+  points earned per time
+  how many times do you do it in a row until you get a free pass?
+
+view goals:
+  total points at the top
+  table view of goals and some form of how you're doing in each of them (points earned, maybe a graph of consistency)
+
+update goal:
+  can edit. will not retroactively change points earned etc.
+
+delete goal:
+  obvious. will not retroactively change points earned etc.
+
+---
+
+REWARDS:
+  simplest will be that 1 point = 1 cent toward buying whatever you want to buy
+  
+(REWARDS:
+
+create reward:
+  name: e.g. "Eat an In-N-Out burger" "Buy"
+  points needed for reward
+)
