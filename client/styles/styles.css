@@ -1,6 +1,10 @@
-table {
+table.collection {
   border-collapse: collapse;
   border: solid 1px black;
+}
+
+table.individual {
+
 }
 
 a:visited {
@@ -13,4 +17,8 @@ a:visited {
 
 .warning {
   color: red;
+}
+
+.auxiliary {
+  float: right;
 }

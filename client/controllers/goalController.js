@@ -11,6 +11,7 @@ angular.module('goal', ['services'])
   $scope.toUse = DEFAULT_TO_USE;
   $scope.username = 'gloria';
 
+  // ---- Collection Page ----
   $scope.add = function() {
     var goal = {
       name: $scope.goalName,
@@ -27,36 +28,6 @@ angular.module('goal', ['services'])
       if (!$routeParams.goal) {
         $scope.loadDefaults();
       }
-    });
-  };
-
-  $scope.update = function(goal) {
-    goal = goal || {
-      name: $scope.goalName,
-      freq: $scope.goalFreq,
-      points: $scope.goalPoints,
-      timesDone: $scope.goalTimesDone || DEFAULT_GOAL_TIMES_DONE,
-      _id: $scope.goalId
-    };
-
-    return Goals.update(goal)
-    .then(function() {
-      $scope.getAll();
-      //reset defaults for temp properties to appear in view
-      if (!$routeParams.goal) {
-        $scope.loadDefaults();
-      }
-    });
-  };
-
-  $scope.redirectToUpdate = function(goalId) {
-    $location.path('/goal/' + goalId);
-  };
-
-  $scope.delete = function(goalId) {
-    Goals.deleteOne(goalId)
-    .then(function() {
-      $scope.getAll();
     });
   };
 
@@ -84,23 +55,18 @@ angular.module('goal', ['services'])
     $scope.toUse = DEFAULT_TO_USE;
   };
 
-  $scope.loadDefaults = function() {
-    $scope.goalName = DEFAULT_GOAL_NAME;
-    $scope.goalFreq = DEFAULT_GOAL_FREQ;
-    $scope.goalPoints = DEFAULT_GOAL_POINTS;
-    $scope.goalId = DEFAULT_GOAL_ID;
+  $scope.redirectToIndividual = function(goalId) {
+    $location.path('/goal/' + goalId);
   };
 
-  $scope.loadFromParam = function() {
-    //console.log($scope.storage);
-    Goals.getOne($routeParams.goal)
-    .then(function(resp) {
-      var currGoal = resp.data;
-      $scope.goalName = currGoal.name;
-      $scope.goalFreq = currGoal.freq;
-      $scope.goalPoints = currGoal.points;
-      $scope.goalId = currGoal._id;
-      $scope.goalTimesDone = currGoal.timesDone;
+  $scope.redirectToCollection = function() {
+    $location.path('/goals');
+  }
+
+  $scope.delete = function(goalId) {
+    Goals.deleteOne(goalId)
+    .then(function() {
+      $scope.getAll();
     });
   };
 
@@ -137,7 +103,46 @@ angular.module('goal', ['services'])
       Users.add(user);
     }
   };
-    
+
+  //collection and individual page
+  $scope.update = function(goal) {
+    goal = goal || {
+      name: $scope.goalName,
+      freq: $scope.goalFreq,
+      points: $scope.goalPoints,
+      timesDone: $scope.goalTimesDone || DEFAULT_GOAL_TIMES_DONE,
+      _id: $scope.goalId
+    };
+
+    return Goals.update(goal)
+    .then(function() {
+      $scope.getAll();
+      //reset defaults for temp properties to appear in view
+      if (!$routeParams.goal) {
+        $scope.loadDefaults();
+      }
+    });
+  };
+
+  $scope.loadDefaults = function() {
+    $scope.goalName = DEFAULT_GOAL_NAME;
+    $scope.goalFreq = DEFAULT_GOAL_FREQ;
+    $scope.goalPoints = DEFAULT_GOAL_POINTS;
+    $scope.goalId = DEFAULT_GOAL_ID;
+  };
+
+  $scope.loadFromParam = function() {
+    //console.log($scope.storage);
+    Goals.getOne($routeParams.goal)
+    .then(function(resp) {
+      var currGoal = resp.data;
+      $scope.goalName = currGoal.name;
+      $scope.goalFreq = currGoal.freq;
+      $scope.goalPoints = currGoal.points;
+      $scope.goalId = currGoal._id;
+      $scope.goalTimesDone = currGoal.timesDone;
+    });
+  };
 
   //get all goals
   $scope.getAll()

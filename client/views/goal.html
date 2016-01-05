@@ -1,6 +1,17 @@
 <!-- update goal -->
 <h2>Update goal</h2>
-Name: <input ng-model="goalName"/>
-Times per week: <input ng-model="goalFreq"/>
-Points earned per time: <input ng-model="goalPoints"/>
-<button ng-click="update()">Submit</button>
+<table>
+  <tr>
+    <td>Name:</td>
+    <td><input ng-model="goalName"/></td>
+    <td>Times per week:</td>
+    <td><input ng-model="goalFreq"/></td>
+    <td>Points earned per time:</td><td><input ng-model="goalPoints"/></td>
+    <td><button ng-click="update()">Submit</button></td>
+  <tr>
+  <tr>
+    <td colspan="7">
+    <button class="auxiliary" ng-click="redirectToCollection()">Back to all goals</button>
+    </td>
+  </tr>
+</table>
