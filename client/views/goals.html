@@ -1,5 +1,5 @@
 <!-- add new goal -->
-<p>User: {{ username }}</p>
+<p>User: {{ userName }}</p>
 
 <h2>Add new goal</h2>
 Name: <input ng-model="goalName"/>
@@ -9,7 +9,7 @@ Points earned per time: <input ng-model="goalPoints"/>
 
 <!-- print all goals -->
 <h2>All Goals</h2>
-<h3>Treat Yo'self Credits: ${{ totalPoints/100 | number:2 }}</h3>
+<h3>Treat Yo'self Credits: ${{ userPoints/100 | number:2 }}</h3>
 $<input ng-model="toUse" /><button ng-click="use()">Spend credit</button>
 <table border="1" class="collection">
   <tr>

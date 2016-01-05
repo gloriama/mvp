@@ -2,51 +2,52 @@ var User = require('../models/userModel.js');
 
 module.exports = {
 
-  //really updateOrCreate
   add: function(req, res, next) {
     console.log("received POST request to /users", req.body);
     var name = req.body.name;
-    var password = req.body.password;
+    var freq = req.body.freq;
     var points = req.body.points;
+    var timesDone = req.body.timesDone;
+    
+    (new User({
+      name: name,
+      freq: freq,
+      points: points,
+      timesDone: timesDone
+    })).save()
+    .then(function(user) {
+      console.log("created new user");
+      res.send(200);
+    });
+  },
 
-    User.find({ name: name }, function(err, users) {
+  update: function(req, res, next) {
+    //console.log("received POST request to /user/", req.body);
+    var id = req.path.substring("/user/".length);
+    var name = req.body.name;
+    var freq = req.body.freq;
+    var points = req.body.points;
+    var timesDone = req.body.timesDone;
+
+    User.findOne({ _id: id }, function(err, user) {
       if (err) {
         return console.error(err);
       }
-
-      if (users.length === 0) {
-        //add user to db
-        var user = new User({
-          name: name,
-          password: password,
-          points: points
-        });
-        user.save(function(err, user) {
-          if (err) {
-            return console.error(err);
-          }
-          console.log("created new user");
-          res.json(user);
-        });
-      } else {
-        var user = users[0];
-        user.name = name;
-        user.password = password;
-        user.points = points;
-        user.save(function(err, user) {
-          if (err) {
-            return console.error(err);
-          }
-          console.log("user already exists, updated");
-          res.json(user);
-        });
-      }
+      user.name = name;
+      user.freq = freq;
+      user.points = points;
+      user.timesDone = timesDone;
+      user.save()
+      .then(function(user) {
+        console.log("updated user");
+        res.send(200);
+      });
     });
   },
 
   getOne: function(req, res, next) {
-    var userName = req.path.substring("/user/".length);
-    User.find({ name: userName }, function(err, users) {
+    var userId = req.path.substring("/user/".length);
+    User.find({ _id: userId }, function(err, users) {
       if (err) {
         return console.error(err);
       }
@@ -59,6 +60,7 @@ module.exports = {
       }
     });
   },
+
 
   getAll: function(req, res, next) {
     console.log("received GET request to /users");
@@ -74,9 +76,8 @@ module.exports = {
 
   delete: function(req, res, next) {
     console.log("received DELETE request to /user/", req.path);
-    var userName = req.path.substring("/user/".length);
-    console.log(userName);
-    User.remove({name: userName}, function(err, user) {
+    var userId = req.path.substring("/user/".length);
+    User.remove({_id: userId}, function(err, user) {
       if (err) {
         return console.error(err)
       }

@@ -4,13 +4,14 @@ var DEFAULT_GOAL_POINTS = 10;
 var DEFAULT_GOAL_TIMES_DONE = 0;
 var DEFAULT_GOAL_ID = -1;
 var DEFAULT_TO_USE = 0;
-var DEFAULT_USER = 'gloria';
+var DEFAULT_USER_NAME = 'gloria';
+var DEFAULT_USER_ID = '568b6a2abd3b48712d3170c9';
+var DEFAULT_USER_POINTS = 0;
 
 angular.module('goal', ['services'])
 .controller('goalCtrl', function($scope, $location, Goals, Users, $routeParams) {
   $scope.storage = [];
   $scope.toUse = DEFAULT_TO_USE;
-  $scope.username = DEFAULT_USER;
 
   // ---- Collection Page ----
   $scope.add = function() {
@@ -44,7 +45,6 @@ angular.module('goal', ['services'])
   $scope.incrementTimesDone = function($index) {
     var goal = $scope.storage[$index];
     goal.timesDone++;
-    console.log("goal just incremented", goal);
     $scope.update(goal)
     .then(function() {
       $scope.updateUserPoints(goal.points);
@@ -78,28 +78,30 @@ angular.module('goal', ['services'])
   };
 
   $scope.getUserPoints = function() {
-    Users.getOne($scope.username)
+    Users.getOne($scope.userId)
     .then(function(resp) {
       var user = resp.data;
-      if (user.points) { //if user existed
-        $scope.totalPoints = user.points;
+      if (user.points) { //if user exists
+        $scope.userPoints = user.points;
       } else {
-        $scope.totalPoints = $scope.calculatePoints();
+        $scope.userPoints = $scope.calculatePoints();
         Users.add({
-          name: $scope.username,
-          points: $scope.totalPoints
+          name: $scope.userName,
+          points: $scope.userPoints
         });
       }
     });
   };
 
   $scope.updateUserPoints = function(changeToPoints) {
-    $scope.totalPoints += changeToPoints;
+    console.log('adding', changeToPoints, 'to', $scope.userPoints);
+    $scope.userPoints += changeToPoints;
     var user = {
-      name: $scope.username,
-      points: $scope.totalPoints
+      _id: $scope.userId,
+      name: $scope.userName,
+      points: $scope.userPoints
     };
-    Users.add(user);
+    Users.update(user);
   };
 
   //collection and individual page
@@ -142,17 +144,24 @@ angular.module('goal', ['services'])
     });
   };
 
+  //for collection:
+  //load defaults
   //get all goals
-  $scope.getAll()
-  .then(function() {
-    //temp properties used in view to store info for the new goal
-    if ($routeParams.goal) {
+  //get user
+
+  //for individual
+  //load from param
+
+  if ($routeParams.goal) {
       $scope.loadFromParam();
-    } else {
-      $scope.loadDefaults();
-    }
-    $scope.totalPoints = $scope.getUserPoints();
-  });
+  } else {
+    $scope.userName = DEFAULT_USER_NAME;
+    $scope.userId = DEFAULT_USER_ID;
+    $scope.userPoints = DEFAULT_USER_POINTS;
+    $scope.loadDefaults();
+    $scope.getAll();
+    $scope.getUserPoints();
+  }
 
 
 });

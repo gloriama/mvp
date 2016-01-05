@@ -19,12 +19,15 @@ app.set('port', process.env.PORT || 8000);
 
 app.post('/goals', goalController.add);
 app.get('/goals', goalController.getAll);
-app.post('/goal/*', goalController.update);
 app.get('/goal/*', goalController.getOne);
+app.post('/goal/*', goalController.update);
 app.delete('/goal/*', goalController.delete);
 
 app.post('/users', userController.add);
+app.get('/users', userController.getAll);
 app.get('/user/*', userController.getOne);
+app.post('/user/*', userController.update);
+app.delete('/user/*', userController.delete);
 
 app.use(express.static(__dirname + '/../client'));
 
