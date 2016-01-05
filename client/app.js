@@ -24,7 +24,13 @@ angular.module('app', ['services'])
       points: $scope.goalPoints
     };
     $scope.storage.push(goal); //update client storage
-    Goals.add(goal); //send POST request to /goals
+    Goals.add(goal) //send POST request to /goals
+    .then(function() {
+      Goals.getAll()
+      .then(function(resp) {
+        console.log(resp.data);
+      });
+    });
 
     //reset defaults for temp properties to appear in view
     $scope.goalName = DEFAULT_GOAL_NAME;

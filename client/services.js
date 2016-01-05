@@ -1,7 +1,7 @@
 angular.module('services', [])
 .factory('Goals', function($http) {
   var add = function(goal) {
-    console.log('adding goal');
+    console.log('adding goal', goal);
     return $http({
       method: 'POST',
       url: '/goals',

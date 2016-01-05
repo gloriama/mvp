@@ -4,6 +4,7 @@
   "description": "Points-based app to help build good habits",
   "main": "server/index.js",
   "dependencies": {
+    "body-parser": "^1.14.2",
     "express": "^4.13.3",
     "kerberos": "0.0.17",
     "mongoose": "^4.3.4"
