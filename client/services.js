@@ -24,10 +24,10 @@ angular.module('services', [])
     })
   };
 
-  var deleteOne = function(goalName) {
+  var deleteOne = function(goalId) {
     return $http({
       method: 'DELETE',
-      url: '/goal/' + goalName
+      url: '/goal/' + goalId
     })
   };
 

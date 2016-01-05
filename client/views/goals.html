@@ -26,6 +26,6 @@ $<input ng-model="toUse" /><button ng-click="use()">Spend credit</button>
     <td>{{ goal.points }}</td>
     <td ng-click="incrementTimesDone($index)">{{ goal.timesDone }}</td>
     <td><button ng-click="redirectToUpdate(goal._id)">Update</button></td>
-    <td><button ng-click="delete($index)">Delete</button></td>
+    <td><button ng-click="delete(goal._id)">Delete</button></td>
   </tr>
 </table>

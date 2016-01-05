@@ -82,9 +82,8 @@ module.exports = {
 
   delete: function(req, res, next) {
     console.log("received DELETE request to /goal/", req.path);
-    var goalName = req.path.substring("/goal/".length);
-    console.log(goalName);
-    Goal.remove({name: goalName}, function(err, goal) {
+    var goalId = req.path.substring("/goal/".length);
+    Goal.remove({_id: goalId}, function(err, goal) {
       if (err) {
         return console.error(err)
       }

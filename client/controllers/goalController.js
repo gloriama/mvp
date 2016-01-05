@@ -36,9 +36,8 @@ angular.module('goal', ['services'])
     $location.path('/goal/' + goalId);
   };
 
-  $scope.delete = function($index) {
-    var currGoal = $scope.storage[$index];
-    Goals.deleteOne(currGoal.name)
+  $scope.delete = function(goalId) {
+    Goals.deleteOne(goalId)
     .then(function() {
       $scope.getAll();
     });
