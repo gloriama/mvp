@@ -16,15 +16,16 @@ angular.module('goal', ['services'])
       timesDone: DEFAULT_GOAL_TIMES_DONE
     };
 
-    Goals.add(goal) //send POST request to /goals
+    return Goals.add(goal) //send POST request to /goals
     .then(function() {
       $scope.getAll();
+
+      //reset defaults for temp properties to appear in view
+      if (!$routeParams.goal) {
+        $scope.loadDefaults();
+      }
     });
 
-    //reset defaults for temp properties to appear in view
-    if (!$routeParams.goal) {
-      $scope.loadDefaults();
-    }
   };
 
   $scope.redirectToUpdate = function($index) {
@@ -51,7 +52,10 @@ angular.module('goal', ['services'])
   $scope.incrementTimesDone = function($index) {
     var goal = $scope.storage[$index];
     goal.timesDone++;
-    $scope.add(goal);
+    $scope.add(goal)
+    .then(function() {
+      $scope.updateTotalPoints();
+    });
   }
   $scope.loadDefaults = function() {
     $scope.goalName = DEFAULT_GOAL_NAME;
@@ -65,7 +69,14 @@ angular.module('goal', ['services'])
     $scope.goalName = currGoal.name;
     $scope.goalFreq = currGoal.freq;
     $scope.goalPoints = currGoal.points;
-  }
+  };
+
+  $scope.updateTotalPoints = function() {
+    $scope.totalPoints = _.reduce($scope.storage, function(acc, goal) {
+      return acc + (goal.points * goal.timesDone);
+    }, 0);
+  };
+    
 
   //get all goals
   $scope.getAll()
@@ -76,6 +87,7 @@ angular.module('goal', ['services'])
     } else {
       $scope.loadDefaults();
     }
+    $scope.updateTotalPoints();
   });
 
 
