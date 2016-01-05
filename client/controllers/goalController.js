@@ -9,7 +9,7 @@ var DEFAULT_USER_ID = '568b6a2abd3b48712d3170c9';
 var DEFAULT_USER_POINTS = 0;
 
 angular.module('goal', ['services'])
-.controller('goalCtrl', function($scope, $location, Goals, Users, $routeParams) {
+.controller('goalCtrl', function($scope, $location, $window, Goals, Users, $routeParams) {
   $scope.storage = [];
   $scope.toUse = DEFAULT_TO_USE;
 
@@ -81,6 +81,7 @@ angular.module('goal', ['services'])
   };
 
   $scope.loadUser = function() {
+    $window.localStorage.setItem('habituate.user.name', $scope.userName);
     Users.getOne($scope.userName)
     //hackily induces search by name instead of id when userName.length < 15
     .then(function(resp) {
@@ -157,7 +158,7 @@ angular.module('goal', ['services'])
     });
   };
 
-  $scope.userName = DEFAULT_USER_NAME;
+  $scope.userName = $window.localStorage.getItem('habituate.user.name') || DEFAULT_USER_NAME;
   $scope.loadUser();
   if ($routeParams.goal) {
       $scope.loadFromParam();
