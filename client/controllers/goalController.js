@@ -47,7 +47,7 @@ angular.module('goal', ['services'])
     return Goals.getAll()
     .then(function(resp) {
       var goals = resp.data;
-      //console.log(goals);
+      console.log(goals);
       $scope.storage = goals;
     });
   };
@@ -62,7 +62,7 @@ angular.module('goal', ['services'])
   };
 
   $scope.use = function() {
-    $scope.updateTotalPoints(-$scope.toUse);
+    $scope.updateTotalPoints(-$scope.toUse*100);
     $scope.toUse = DEFAULT_TO_USE;
   };
 

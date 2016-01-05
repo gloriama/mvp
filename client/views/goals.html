@@ -9,8 +9,8 @@ Points earned per time: <input ng-model="goalPoints"/>
 
 <!-- print all goals -->
 <h2>All Goals</h2>
-<h3>Total Points: {{ totalPoints }}</h3>
-<input ng-model="toUse" /><button ng-click="use()">Use points</button>
+<h3>Treat Yo'self Credits: ${{ totalPoints/100 | number:2 }}</h3>
+$<input ng-model="toUse" /><button ng-click="use()">Spend credit</button>
 <table border="1">
   <tr>
     <th>Name</th>
