@@ -12,12 +12,16 @@ GOALS:
     x definition of goal (name freq points)
     some form of how you're doing in each of them (points earned, maybe a graph of consistency)
     x a place to indicate that you did it
+      (limit amount of times you are allowed to do a thing in a week)
+      (must somehow show the current week separately from previous data)
 
 [x] update goal:
   can edit. will not retroactively change points earned etc.
+  (make it update not by name but by mongoose id)
 
 [x] delete goal:
   obvious. will not retroactively change points earned etc.
+  (make it delete not by name but by mongoose id)
 
 ---
 

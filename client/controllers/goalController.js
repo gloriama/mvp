@@ -5,9 +5,10 @@ var DEFAULT_GOAL_TIMES_DONE = 0;
 var DEFAULT_TO_USE = 0;
 
 angular.module('goal', ['services'])
-.controller('goalCtrl', function($scope, $location, Goals, $routeParams) {
+.controller('goalCtrl', function($scope, $location, Goals, Users, $routeParams) {
   $scope.storage = [];
   $scope.toUse = DEFAULT_TO_USE;
+  $scope.username = 'gloria';
 
   $scope.add = function(goal) {
     //goal is optional: will default to the info in the $scope properties
@@ -56,12 +57,12 @@ angular.module('goal', ['services'])
     goal.timesDone++;
     $scope.add(goal)
     .then(function() {
-      $scope.updateTotalPoints();
+      $scope.updateTotalPoints(goal.points);
     });
   };
 
   $scope.use = function() {
-    $scope.totalPoints -= $scope.toUse;
+    $scope.updateTotalPoints(-$scope.toUse);
     $scope.toUse = DEFAULT_TO_USE;
   };
 
@@ -79,10 +80,38 @@ angular.module('goal', ['services'])
     $scope.goalPoints = currGoal.points;
   };
 
-  $scope.updateTotalPoints = function() {
-    $scope.totalPoints = _.reduce($scope.storage, function(acc, goal) {
-      return acc + (goal.points * goal.timesDone);
-    }, 0);
+  $scope.updateTotalPoints = function(changeToPoints) {
+    // $scope.totalPoints = _.reduce($scope.storage, function(acc, goal) {
+    //   return acc + (goal.points * goal.timesDone);
+    // }, 0);
+  
+    //if changeToPoints is blank, then query server for points
+
+    if (changeToPoints === undefined) {
+      Users.getOne($scope.username)
+      .then(function(resp) {
+        var user = resp.data;
+        console.log(user);
+        if (user.points) { //if user existed
+          $scope.totalPoints = user.points;
+        } else {
+          $scope.totalPoints = _.reduce($scope.storage, function(acc, goal) {
+            return acc + (goal.points * goal.timesDone);
+          }, 0);
+          Users.add({
+            name: $scope.username,
+            points: $scope.totalPoints
+          });
+        }
+      });
+    } else {
+      $scope.totalPoints += changeToPoints;
+      var user = {
+        name: $scope.username,
+        points: $scope.totalPoints
+      };
+      Users.add(user);
+    }
   };
     
 

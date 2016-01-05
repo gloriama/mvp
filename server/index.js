@@ -4,6 +4,7 @@ var bodyParser = require('body-parser');
 
 //controllers
 var goalController = require('./controllers/goalController.js');
+var userController = require('./controllers/userController.js');
 
 var app = express();
 
@@ -17,10 +18,11 @@ app.use(bodyParser.json());
 app.set('port', process.env.PORT || 8000);
 
 app.get('/goals', goalController.getAll);
-
 app.post('/goals', goalController.add);
-
 app.delete('/goal/*', goalController.delete);
+
+app.get('/user/*', userController.getOne);
+app.post('/users', userController.add);
 
 app.use(express.static(__dirname + '/../client'));
 
