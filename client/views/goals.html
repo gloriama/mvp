@@ -1,6 +1,6 @@
 <!-- add new goal -->
 <header>
-  <form name="userForm">
+  <form name="userForm" novalidate>
     <p>User: <input ng-model="userName" />
       <button ng-click="loadUser()">Change user</button>
     </p>
@@ -18,13 +18,18 @@
 </header>
 
 <h2>Add new goal</h2>
-<form name="goalForm">
-  <div>
-    Name: <input name="goalName" ng-model="goalName" required/>
-    Times per week: <input name="goalFreq" type="number" ng-model="goalFreq" ng-pattern="/^[0-9]*$/"/>
-    Points earned per time: <input name="goalPoints" type="number" ng-model="goalPoints" required min="0"/>
-    <button ng-click="add()">Submit</button>
-  </div>
+<form name="goalForm" novalidate>
+  <table>
+    <tr>
+      <td>Name:</td>
+      <td><input name="goalName" ng-model="goalName" required/></td>
+      <td>Times per week:</td>
+      <td><input name="goalFreq" type="number" ng-model="goalFreq" ng-pattern="/^[0-9]*$/"/></td>
+      <td>Points earned per time:</td>
+      <td><input name="goalPoints" type="number" ng-model="goalPoints" required min="0"/></td>
+      <td><button ng-click="update()">Submit</button></td>
+    <tr>
+  </table>
   <!-- start Validation -->
   <div class="warning" ng-show="goalForm.goalName.$touched && goalForm.goalName.$invalid">
     Please enter name
