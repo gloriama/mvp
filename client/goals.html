@@ -1,10 +1,12 @@
 <!-- add new goal -->
-<input ng-model="goalName"/>
-<input ng-model="goalFreq"/>
-<input ng-model="goalPoints"/>
+<h2>Add new goal</h2>
+Name: <input ng-model="goalName"/>
+Times per week: <input ng-model="goalFreq"/>
+Points earned per time: <input ng-model="goalPoints"/>
 <button ng-click="add()">Submit</button>
 
 <!-- print all goals -->
+<h2>All Goals</h2>
 <table border="1">
   <tr>
     <th>Name</th>

@@ -1,25 +1,6 @@
-<!-- add new goal -->
-<input ng-model="goalName"/>
-<input ng-model="goalFreq"/>
-<input ng-model="goalPoints"/>
+<!-- update goal -->
+<h2>Update goal</h2>
+Name: <input ng-model="goalName"/>
+Times per week: <input ng-model="goalFreq"/>
+Points earned per time: <input ng-model="goalPoints"/>
 <button ng-click="add()">Submit</button>
-
-<!-- print all goals -->
-<table border="1">
-  <tr>
-    <th>Name</th>
-    <th>Times per week</th>
-    <th>Points per time</th>
-    <th>Did it!</th>
-    <th>Update</th>
-    <th>Delete</th>
-  </tr>
-  <tr>
-    <td>{{ goalName }}</td>
-    <td>{{ goalFreq }}</td>
-    <td>{{ goalPoints }}</td>
-    <td>{{ goalTimesDone }}</td>
-    <td><button ng-click="redirectToUpdate($index)">Update</button></td>
-    <td><button ng-click="delete($index)">Delete</button></td>
-  </tr>
-</table>

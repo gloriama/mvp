@@ -7,16 +7,14 @@ angular.module('goal', ['services'])
 .controller('goalCtrl', function($scope, $location, Goals, $routeParams) {
   $scope.storage = [];
 
-  $scope.add = function() {
-    var goal = {
+  $scope.add = function(goal) {
+    //goal is optional: will default to the info in the $scope properties
+    goal = goal || {
       name: $scope.goalName,
       freq: $scope.goalFreq,
       points: $scope.goalPoints,
       timesDone: DEFAULT_GOAL_TIMES_DONE
     };
-
-    //update client storage
-    $scope.storage.push(goal);
 
     Goals.add(goal) //send POST request to /goals
     .then(function() {
@@ -51,7 +49,9 @@ angular.module('goal', ['services'])
   };
 
   $scope.incrementTimesDone = function($index) {
-    var currGoal = $scope.storage[$index];
+    var goal = $scope.storage[$index];
+    goal.timesDone++;
+    $scope.add(goal);
   }
   $scope.loadDefaults = function() {
     $scope.goalName = DEFAULT_GOAL_NAME;
