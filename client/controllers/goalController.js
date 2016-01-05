@@ -130,9 +130,10 @@ angular.module('goal', ['services'])
 
     return Goals.update(goal)
     .then(function() {
-      $scope.loadGoals();
-      //reset defaults for temp properties to appear in view
-      if (!$routeParams.goal) {
+      if ($routeParams.goal) { //if run from individual page
+        $scope.redirectToCollection();
+      } else { //if run from collection page
+        $scope.loadGoals();
         $scope.loadDefaults();
       }
     });
