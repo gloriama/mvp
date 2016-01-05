@@ -4,12 +4,13 @@ var DEFAULT_GOAL_POINTS = 10;
 var DEFAULT_GOAL_TIMES_DONE = 0;
 var DEFAULT_GOAL_ID = -1;
 var DEFAULT_TO_USE = 0;
+var DEFAULT_USER = 'gloria';
 
 angular.module('goal', ['services'])
 .controller('goalCtrl', function($scope, $location, Goals, Users, $routeParams) {
   $scope.storage = [];
   $scope.toUse = DEFAULT_TO_USE;
-  $scope.username = 'gloria';
+  $scope.username = DEFAULT_USER;
 
   // ---- Collection Page ----
   $scope.add = function() {
@@ -46,12 +47,12 @@ angular.module('goal', ['services'])
     console.log("goal just incremented", goal);
     $scope.update(goal)
     .then(function() {
-      $scope.updateTotalPoints(goal.points);
+      $scope.updateUserPoints(goal.points);
     });
   };
 
   $scope.use = function() {
-    $scope.updateTotalPoints(-$scope.toUse*100);
+    $scope.updateUserPoints(-$scope.toUse*100);
     $scope.toUse = DEFAULT_TO_USE;
   };
 
@@ -70,38 +71,35 @@ angular.module('goal', ['services'])
     });
   };
 
-  $scope.updateTotalPoints = function(changeToPoints) {
-    // $scope.totalPoints = _.reduce($scope.storage, function(acc, goal) {
-    //   return acc + (goal.points * goal.timesDone);
-    // }, 0);
-  
-    //if changeToPoints is blank, then query server for points
+  $scope.calculatePoints = function() {
+    return _.reduce($scope.storage, function(acc, goal) {
+      return acc + (goal.points * goal.timesDone);
+    }, 0);
+  };
 
-    if (changeToPoints === undefined) {
-      Users.getOne($scope.username)
-      .then(function(resp) {
-        var user = resp.data;
-        console.log(user);
-        if (user.points) { //if user existed
-          $scope.totalPoints = user.points;
-        } else {
-          $scope.totalPoints = _.reduce($scope.storage, function(acc, goal) {
-            return acc + (goal.points * goal.timesDone);
-          }, 0);
-          Users.add({
-            name: $scope.username,
-            points: $scope.totalPoints
-          });
-        }
-      });
-    } else {
-      $scope.totalPoints += changeToPoints;
-      var user = {
-        name: $scope.username,
-        points: $scope.totalPoints
-      };
-      Users.add(user);
-    }
+  $scope.getUserPoints = function() {
+    Users.getOne($scope.username)
+    .then(function(resp) {
+      var user = resp.data;
+      if (user.points) { //if user existed
+        $scope.totalPoints = user.points;
+      } else {
+        $scope.totalPoints = $scope.calculatePoints();
+        Users.add({
+          name: $scope.username,
+          points: $scope.totalPoints
+        });
+      }
+    });
+  };
+
+  $scope.updateUserPoints = function(changeToPoints) {
+    $scope.totalPoints += changeToPoints;
+    var user = {
+      name: $scope.username,
+      points: $scope.totalPoints
+    };
+    Users.add(user);
   };
 
   //collection and individual page
@@ -153,7 +151,7 @@ angular.module('goal', ['services'])
     } else {
       $scope.loadDefaults();
     }
-    $scope.updateTotalPoints();
+    $scope.totalPoints = $scope.getUserPoints();
   });
 
 
