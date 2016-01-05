@@ -2,10 +2,12 @@ var DEFAULT_GOAL_NAME = '';
 var DEFAULT_GOAL_FREQ = 1;
 var DEFAULT_GOAL_POINTS = 10;
 var DEFAULT_GOAL_TIMES_DONE = 0;
+var DEFAULT_TO_USE = 0;
 
 angular.module('goal', ['services'])
 .controller('goalCtrl', function($scope, $location, Goals, $routeParams) {
   $scope.storage = [];
+  $scope.toUse = DEFAULT_TO_USE;
 
   $scope.add = function(goal) {
     //goal is optional: will default to the info in the $scope properties
@@ -56,7 +58,13 @@ angular.module('goal', ['services'])
     .then(function() {
       $scope.updateTotalPoints();
     });
-  }
+  };
+
+  $scope.use = function() {
+    $scope.totalPoints -= $scope.toUse;
+    $scope.toUse = DEFAULT_TO_USE;
+  };
+
   $scope.loadDefaults = function() {
     $scope.goalName = DEFAULT_GOAL_NAME;
     $scope.goalFreq = DEFAULT_GOAL_FREQ;
