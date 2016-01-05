@@ -1,6 +1,7 @@
 var DEFAULT_GOAL_NAME = '';
 var DEFAULT_GOAL_FREQ = 1;
 var DEFAULT_GOAL_POINTS = 10;
+var DEFAULT_GOAL_TIMES_DONE = 0;
 
 angular.module('app', ['services'])
 .controller('goalCtrl', function($scope, Goals) {
@@ -15,12 +16,13 @@ angular.module('app', ['services'])
     var goal = {
       name: $scope.goalName,
       freq: $scope.goalFreq,
-      points: $scope.goalPoints
+      points: $scope.goalPoints,
+      timesDone: DEFAULT_GOAL_TIMES_DONE
     };
 
     //update client storage
     $scope.storage.push(goal);
-    
+
     Goals.add(goal) //send POST request to /goals
     .then(function() {
       $scope.getAll();

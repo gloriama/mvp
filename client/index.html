@@ -21,11 +21,13 @@
         <th>Name</th>
         <th>Times per week</th>
         <th>Points per time</th>
+        <th>Did it!</th>
       </tr>
       <tr ng-repeat="goal in storage">
         <td>{{ goal.name }}</td>
         <td>{{ goal.freq }}</td>
         <td>{{ goal.points }}</td>
+        <td>{{ goal.timesDone }}</td>
       </tr>
     </table>
   </body>

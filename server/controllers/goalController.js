@@ -6,6 +6,7 @@ module.exports = {
     var name = req.body.name;
     var freq = req.body.freq;
     var points = req.body.points;
+    var timesDone = req.body.timesDone;
 
     Goal.find({ name: name }, function(err, goals) {
       if (err) {
@@ -17,7 +18,8 @@ module.exports = {
         (new Goal({
           name: name,
           freq: freq,
-          points: points
+          points: points,
+          timesDone: timesDone
         })).save(function(err, goal) {
           if (err) {
             return console.error(err);
