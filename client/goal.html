@@ -19,7 +19,7 @@
     <td>{{ goalFreq }}</td>
     <td>{{ goalPoints }}</td>
     <td>{{ goalTimesDone }}</td>
-    <td ng-click="update()">Update</td>
-    <td ng-clock="delete()">Delete</td>
+    <td><button ng-click="redirectToUpdate($index)">Update</button></td>
+    <td><button ng-click="delete($index)">Delete</button></td>
   </tr>
 </table>

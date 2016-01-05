@@ -24,10 +24,12 @@ angular.module('goal', ['services'])
     });
 
     //reset defaults for temp properties to appear in view
-    $scope.loadDefaults();
+    if (!$routeParams.goal) {
+      $scope.loadDefaults();
+    }
   };
 
-  $scope.update = function($index) {
+  $scope.redirectToUpdate = function($index) {
     $location.path('/goal/' + $index);
   };
 
@@ -48,6 +50,9 @@ angular.module('goal', ['services'])
     });
   };
 
+  $scope.incrementTimesDone = function($index) {
+    var currGoal = $scope.storage[$index];
+  }
   $scope.loadDefaults = function() {
     $scope.goalName = DEFAULT_GOAL_NAME;
     $scope.goalFreq = DEFAULT_GOAL_FREQ;

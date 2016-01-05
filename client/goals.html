@@ -18,8 +18,8 @@
     <td>{{ goal.name }}</td>
     <td>{{ goal.freq }}</td>
     <td>{{ goal.points }}</td>
-    <td>{{ goal.timesDone }}</td>
-    <td><button ng-click="update($index)">Update</button></td>
+    <td ng-click="incrementTimesDone($index)">{{ goal.timesDone }}</td>
+    <td><button ng-click="redirectToUpdate($index)">Update</button></td>
     <td><button ng-click="delete($index)">Delete</button></td>
   </tr>
 </table>

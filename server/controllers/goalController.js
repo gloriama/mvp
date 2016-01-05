@@ -1,6 +1,8 @@
 var Goal = require('../models/goalModel.js');
 
 module.exports = {
+
+  //really updateOrCreate
   add: function(req, res, next) {
     console.log("received POST request to /goals", req.body);
     var name = req.body.name;
@@ -27,7 +29,12 @@ module.exports = {
           console.log("created new goal");
         });
       } else {
-        console.log("goal already exists");
+        console.log("goal already exists, updating");
+        goals[0].name = name;
+        goals[0].freq = freq;
+        goals[0].points = points;
+        goals[0].timesDone = timesDone;
+        goals[0].save();
       }
 
       res.send(200);
