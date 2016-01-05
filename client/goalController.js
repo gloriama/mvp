@@ -27,9 +27,9 @@ angular.module('goal', ['services'])
     $scope.loadDefaults();
   };
 
-  $scope.update = function() {
-    console.log('redirecting to goal page');
-    $location.path('/goal');
+  $scope.update = function($index) {
+    // console.log('redirecting to individual goal page for', $index);
+    $location.path('/goal/' + $index);
   }
 
   $scope.getAll = function() {
@@ -48,9 +48,8 @@ angular.module('goal', ['services'])
   };
 
   $scope.loadFromParam = function() {
-    console.log($scope.storage);
+    //console.log($scope.storage);
     var currGoal = $scope.storage[$routeParams.goal];
-    console.log(currGoal);
     $scope.goalName = currGoal.name;
     $scope.goalFreq = currGoal.freq;
     $scope.goalPoints = currGoal.points;
