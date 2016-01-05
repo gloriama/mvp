@@ -1,5 +1,11 @@
 <!-- add new goal -->
-<p>User: {{ userName }}</p>
+<header>
+  <p>User: {{ userName }}<p>
+  <p>"Treat Yo'self" Credits:
+    <span class="positive">${{ userPoints/100 | number:2 }}</span>
+  </p>
+  <p>$<input ng-model="toUse" placeholder="0.00"/><button ng-click="usePoints()">Spend credit</button></p>
+</header>
 
 <h2>Add new goal</h2>
 Name: <input ng-model="goalName"/>
@@ -9,8 +15,6 @@ Points earned per time: <input ng-model="goalPoints"/>
 
 <!-- print all goals -->
 <h2>All Goals</h2>
-<h3>Treat Yo'self Credits: ${{ userPoints/100 | number:2 }}</h3>
-$<input ng-model="toUse" /><button ng-click="use()">Spend credit</button>
 <table border="1" class="collection">
   <tr>
     <th>Name</th>

@@ -3,7 +3,7 @@ var DEFAULT_GOAL_FREQ = 1;
 var DEFAULT_GOAL_POINTS = 10;
 var DEFAULT_GOAL_TIMES_DONE = 0;
 var DEFAULT_GOAL_ID = -1;
-var DEFAULT_TO_USE = 0;
+var DEFAULT_TO_USE = '';
 var DEFAULT_USER_NAME = 'gloria';
 var DEFAULT_USER_ID = '568b6a2abd3b48712d3170c9';
 var DEFAULT_USER_POINTS = 0;
@@ -51,7 +51,7 @@ angular.module('goal', ['services'])
     });
   };
 
-  $scope.use = function() {
+  $scope.usePoints = function() {
     $scope.updateUserPoints(-$scope.toUse*100);
     $scope.toUse = DEFAULT_TO_USE;
   };
