@@ -1,18 +1,42 @@
 <!-- add new goal -->
 <header>
-  <p>User: <input ng-model="userName" />
-    <button ng-click="loadUser()">Change user</button><p>
-  <p>"Treat Yo'self" Credits:
-    <span class="positive">${{ userPoints/100 | number:2 }}</span>
-  </p>
-  <p>$<input ng-model="toUse" placeholder="0.00"/><button ng-click="usePoints()">Spend credit</button></p>
+  <form name="userForm">
+    <p>User: <input ng-model="userName" />
+      <button ng-click="loadUser()">Change user</button>
+    </p>
+    <p>"Treat Yo'self" Credits:
+      <span class="positive">${{ userPoints/100 | number:2 }}</span>
+    </p>
+    <p>
+      $<input name="toUse" ng-model="toUse" placeholder="0.00" ng-pattern="/^[0-9]*(\.[0-9]{0,2})?$/"/><button ng-click="usePoints()">Spend credit</button>
+    </p>
+    <!-- start Validation -->
+    <div class="warning" ng-show="userForm.toUse.$touched && userForm.toUse.$invalid">
+      Please enter valid value (positive money value)
+    </div>
+  </form>
 </header>
 
 <h2>Add new goal</h2>
-Name: <input ng-model="goalName"/>
-Times per week: <input ng-model="goalFreq"/>
-Points earned per time: <input ng-model="goalPoints"/>
-<button ng-click="add()">Submit</button>
+<form name="goalForm">
+  <div>
+    Name: <input name="goalName" ng-model="goalName" required/>
+    Times per week: <input name="goalFreq" type="number" ng-model="goalFreq" ng-pattern="/^[0-9]*$/"/>
+    Points earned per time: <input name="goalPoints" type="number" ng-model="goalPoints" required min="0"/>
+    <button ng-click="add()">Submit</button>
+  </div>
+  <!-- start Validation -->
+  <div class="warning" ng-show="goalForm.goalName.$touched && goalForm.goalName.$invalid">
+    Please enter name
+  </div>
+  <div class="warning" ng-show="goalForm.goalFreq.$invalid">
+    Please enter valid frequency (positive integer)
+  </div>
+  <div class="warning" ng-show="goalForm.goalPoints.$invalid">
+    Please enter valid points (positive number)
+  </div>
+  <!-- end Validation -->
+</form>
 
 <!-- print all goals -->
 <h2>All Goals</h2>
