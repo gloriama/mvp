@@ -6,11 +6,11 @@ angular.module('app', ['services', 'goal', 'ngRoute'])
   //   controller: 'goalCtrl'
   // })
   .when('/goals', {
-    templateUrl: 'goals.html',
+    templateUrl: 'views/goals.html',
     controller: 'goalCtrl'
   })
   .when('/goal/:goal', {
-    templateUrl: 'goal.html',
+    templateUrl: 'views/goal.html',
     controller: 'goalCtrl'
   })
 });
