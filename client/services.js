@@ -17,6 +17,13 @@ angular.module('services', [])
     });
   };
 
+  var getOne = function(goalId) {
+    return $http({
+      method: 'GET',
+      url: '/goal/' + goalId
+    })
+  };
+
   var deleteOne = function(goalName) {
     return $http({
       method: 'DELETE',
@@ -27,6 +34,7 @@ angular.module('services', [])
   return {
     add: add,
     getAll: getAll,
+    getOne: getOne,
     deleteOne: deleteOne
   };
 })

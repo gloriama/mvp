@@ -17,12 +17,13 @@ app.use(bodyParser.json());
 
 app.set('port', process.env.PORT || 8000);
 
-app.get('/goals', goalController.getAll);
 app.post('/goals', goalController.add);
+app.get('/goals', goalController.getAll);
+app.get('/goal/*', goalController.getOne);
 app.delete('/goal/*', goalController.delete);
 
-app.get('/user/*', userController.getOne);
 app.post('/users', userController.add);
+app.get('/user/*', userController.getOne);
 
 app.use(express.static(__dirname + '/../client'));
 

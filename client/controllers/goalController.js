@@ -2,6 +2,7 @@ var DEFAULT_GOAL_NAME = '';
 var DEFAULT_GOAL_FREQ = 1;
 var DEFAULT_GOAL_POINTS = 10;
 var DEFAULT_GOAL_TIMES_DONE = 0;
+var DEFAULT_GOAL_ID = -1;
 var DEFAULT_TO_USE = 0;
 
 angular.module('goal', ['services'])
@@ -16,7 +17,8 @@ angular.module('goal', ['services'])
       name: $scope.goalName,
       freq: $scope.goalFreq,
       points: $scope.goalPoints,
-      timesDone: DEFAULT_GOAL_TIMES_DONE
+      timesDone: DEFAULT_GOAL_TIMES_DONE,
+      _id: $scope.goalId
     };
 
     return Goals.add(goal) //send POST request to /goals
@@ -28,11 +30,10 @@ angular.module('goal', ['services'])
         $scope.loadDefaults();
       }
     });
-
   };
 
-  $scope.redirectToUpdate = function($index) {
-    $location.path('/goal/' + $index);
+  $scope.redirectToUpdate = function(goalId) {
+    $location.path('/goal/' + goalId);
   };
 
   $scope.delete = function($index) {
@@ -70,14 +71,19 @@ angular.module('goal', ['services'])
     $scope.goalName = DEFAULT_GOAL_NAME;
     $scope.goalFreq = DEFAULT_GOAL_FREQ;
     $scope.goalPoints = DEFAULT_GOAL_POINTS;
+    $scope.goalId = DEFAULT_GOAL_ID;
   };
 
   $scope.loadFromParam = function() {
     //console.log($scope.storage);
-    var currGoal = $scope.storage[$routeParams.goal];
-    $scope.goalName = currGoal.name;
-    $scope.goalFreq = currGoal.freq;
-    $scope.goalPoints = currGoal.points;
+    Goals.getOne($routeParams.goal)
+    .then(function(resp) {
+      var currGoal = resp.data;
+      $scope.goalName = currGoal.name;
+      $scope.goalFreq = currGoal.freq;
+      $scope.goalPoints = currGoal.points;
+      $scope.goalId = currGoal._id;
+    });
   };
 
   $scope.updateTotalPoints = function(changeToPoints) {
