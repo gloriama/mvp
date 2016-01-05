@@ -16,7 +16,7 @@ angular.module('services', [])
   return function(keyword) {
     var add = function(obj) {
       // console.log('adding goal', goal);
-      return sendReq('POST', '/'+keyword, obj);
+      return sendReq('POST', '/'+keyword+'s', obj);
     };
 
     var getAll = function() {
