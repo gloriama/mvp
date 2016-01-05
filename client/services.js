@@ -1,12 +1,21 @@
 angular.module('services', [])
 .factory('Goals', function($http) {
   var add = function(goal) {
-    console.log('adding or updating goal', goal);
+    console.log('adding goal', goal);
     return $http({
       method: 'POST',
       url: '/goals',
       data: goal
     });
+  };
+
+  var update = function(goal) {
+    console.log('updating goal', goal);
+    return $http({
+      method: 'POST',
+      url: '/goal/' + goal._id,
+      data: goal
+    }); 
   };
 
   var getAll = function() {
@@ -33,6 +42,7 @@ angular.module('services', [])
 
   return {
     add: add,
+    update: update,
     getAll: getAll,
     getOne: getOne,
     deleteOne: deleteOne

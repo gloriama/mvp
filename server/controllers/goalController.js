@@ -2,48 +2,47 @@ var Goal = require('../models/goalModel.js');
 
 module.exports = {
 
-  //really updateOrCreate
   add: function(req, res, next) {
     console.log("received POST request to /goals", req.body);
-    var id = req.body._id;
+    var name = req.body.name;
+    var freq = req.body.freq;
+    var points = req.body.points;
+    var timesDone = req.body.timesDone;
+    
+    (new Goal({
+      name: name,
+      freq: freq,
+      points: points,
+      timesDone: timesDone
+    })).save()
+    .then(function(goal) {
+      console.log("created new goal");
+      res.send(200);
+    });
+  },
+
+  update: function(req, res, next) {
+    //console.log("received POST request to /goal/", req.body);
+    var id = req.path.substring("/goal/".length);
     var name = req.body.name;
     var freq = req.body.freq;
     var points = req.body.points;
     var timesDone = req.body.timesDone;
 
-    //if id is defined
-      //try to find
-      //if found, update
-      //else respond with error that it could not be found
-    //else create
-
-    if (id !== -1) { //update
-      Goal.findOne({ _id: id }, function(err, goal) {
-        if (err) {
-          return console.error(err);
-        }
-        goal.name = name;
-        goal.freq = freq;
-        goal.points = points;
-        goal.timesDone = timesDone;
-        goal.save()
-        .then(function(goal) {
-          console.log("updated goal");
-          res.send(200);
-        });
-      });
-    } else { //create
-      (new Goal({
-        name: name,
-        freq: freq,
-        points: points,
-        timesDone: timesDone
-      })).save()
+    Goal.findOne({ _id: id }, function(err, goal) {
+      if (err) {
+        return console.error(err);
+      }
+      goal.name = name;
+      goal.freq = freq;
+      goal.points = points;
+      goal.timesDone = timesDone;
+      goal.save()
       .then(function(goal) {
-        console.log("created new goal");
+        console.log("updated goal");
         res.send(200);
       });
-    }
+    });
   },
 
   getOne: function(req, res, next) {

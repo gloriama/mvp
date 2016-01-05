@@ -19,6 +19,7 @@ app.set('port', process.env.PORT || 8000);
 
 app.post('/goals', goalController.add);
 app.get('/goals', goalController.getAll);
+app.post('/goal/*', goalController.update);
 app.get('/goal/*', goalController.getOne);
 app.delete('/goal/*', goalController.delete);
 

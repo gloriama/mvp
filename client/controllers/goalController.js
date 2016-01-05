@@ -11,20 +11,37 @@ angular.module('goal', ['services'])
   $scope.toUse = DEFAULT_TO_USE;
   $scope.username = 'gloria';
 
-  $scope.add = function(goal) {
-    //goal is optional: will default to the info in the $scope properties
-    goal = goal || {
+  $scope.add = function() {
+    var goal = {
       name: $scope.goalName,
       freq: $scope.goalFreq,
       points: $scope.goalPoints,
-      timesDone: DEFAULT_GOAL_TIMES_DONE,
-      _id: $scope.goalId
+      timesDone: DEFAULT_GOAL_TIMES_DONE
     };
 
     return Goals.add(goal) //send POST request to /goals
     .then(function() {
       $scope.getAll();
 
+      //reset defaults for temp properties to appear in view
+      if (!$routeParams.goal) {
+        $scope.loadDefaults();
+      }
+    });
+  };
+
+  $scope.update = function(goal) {
+    goal = goal || {
+      name: $scope.goalName,
+      freq: $scope.goalFreq,
+      points: $scope.goalPoints,
+      timesDone: $scope.goalTimesDone || DEFAULT_GOAL_TIMES_DONE,
+      _id: $scope.goalId
+    };
+
+    return Goals.update(goal)
+    .then(function() {
+      $scope.getAll();
       //reset defaults for temp properties to appear in view
       if (!$routeParams.goal) {
         $scope.loadDefaults();
@@ -55,7 +72,8 @@ angular.module('goal', ['services'])
   $scope.incrementTimesDone = function($index) {
     var goal = $scope.storage[$index];
     goal.timesDone++;
-    $scope.add(goal)
+    console.log("goal just incremented", goal);
+    $scope.update(goal)
     .then(function() {
       $scope.updateTotalPoints(goal.points);
     });
@@ -82,6 +100,7 @@ angular.module('goal', ['services'])
       $scope.goalFreq = currGoal.freq;
       $scope.goalPoints = currGoal.points;
       $scope.goalId = currGoal._id;
+      $scope.goalTimesDone = currGoal.timesDone;
     });
   };
 
