@@ -8,11 +8,14 @@
       <span class="positive">${{ userPoints/100 | number:2 }}</span>
     </p>
     <p>
-      $<input name="toUse" ng-model="toUse" placeholder="0.00" ng-pattern="/^[0-9]*(\.[0-9]{0,2})?$/"/><button ng-click="usePoints()">Spend credit</button>
+      $<input name="toUse" type="number" ng-model="toUse" placeholder="0.00" ng-pattern="/^[0-9]*(\.[0-9]{1,2})?$/" max={{userPoints/100}}/><button ng-click="usePoints()">Spend credit</button>
     </p>
     <!-- start Validation -->
-    <div class="warning" ng-show="userForm.toUse.$invalid">
-      Please enter valid value (positive money value)
+    <div class="warning" ng-show="userForm.toUse.$invalid && !userForm.toUse.$error.max">
+      Please enter valid value (positive, up to 2 decimals)
+    </div>
+    <div class="warning" ng-show="userForm.toUse.$error.max">
+      You don't have enough credits!
     </div>
   </form>
 </header>
