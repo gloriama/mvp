@@ -19,12 +19,13 @@ angular.module('goal', ['services'])
       name: $scope.goalName,
       freq: $scope.goalFreq,
       points: $scope.goalPoints,
-      timesDone: DEFAULT_GOAL_TIMES_DONE
+      timesDone: DEFAULT_GOAL_TIMES_DONE,
+      userId: $scope.userId
     };
 
     return Goals.add(goal) //send POST request to /goals
     .then(function() {
-      $scope.getAll();
+      $scope.loadGoals();
 
       //reset defaults for temp properties to appear in view
       if (!$routeParams.goal) {
@@ -33,12 +34,14 @@ angular.module('goal', ['services'])
     });
   };
 
-  $scope.getAll = function() {
+  $scope.loadGoals = function() {
     return Goals.getAll()
     .then(function(resp) {
       var goals = resp.data;
-      //console.log(goals);
-      $scope.storage = goals;
+      console.log("all goals:", goals);
+      $scope.storage = goals.filter(function(goal) {
+        return goal.userId === $scope.userId;
+      });
     });
   };
 
@@ -64,10 +67,10 @@ angular.module('goal', ['services'])
     $location.path('/goals');
   }
 
-  $scope.delete = function(goalId) {
-    Goals.deleteOne(goalId)
+  $scope.delete = function(id) {
+    Goals.deleteOne(id)
     .then(function() {
-      $scope.getAll();
+      $scope.loadGoals();
     });
   };
 
@@ -82,16 +85,22 @@ angular.module('goal', ['services'])
     //hackily induces search by name instead of id when userName.length < 15
     .then(function(resp) {
       var user = resp.data;
-      if (user.points) { //if user exists
+      if (user._id) { //if user exists
         $scope.userId = user._id;
         $scope.userPoints = user.points;
+        $scope.loadGoals();
       } else {
-        console.log('user does not exist');
-        // $scope.userPoints = $scope.calculatePoints();
-        // Users.add({
-        //   name: $scope.userName,
-        //   points: $scope.userPoints
-        // });
+        console.log('adding new user');
+        Users.add({
+          name: $scope.userName,
+          points: DEFAULT_USER_POINTS
+        })
+        .then(function(resp) {
+          var user = resp.data;
+          $scope.userId = user._id;
+          $scope.userPoints = user.points;
+          $scope.loadGoals();
+        });
       }
     });
   };
@@ -110,16 +119,17 @@ angular.module('goal', ['services'])
   //collection and individual page
   $scope.update = function(goal) {
     goal = goal || {
+      _id: $scope.goalId,
       name: $scope.goalName,
       freq: $scope.goalFreq,
       points: $scope.goalPoints,
       timesDone: $scope.goalTimesDone || DEFAULT_GOAL_TIMES_DONE,
-      _id: $scope.goalId
+      userId: $scope.userId
     };
 
     return Goals.update(goal)
     .then(function() {
-      $scope.getAll();
+      $scope.loadGoals();
       //reset defaults for temp properties to appear in view
       if (!$routeParams.goal) {
         $scope.loadDefaults();
@@ -147,23 +157,13 @@ angular.module('goal', ['services'])
     });
   };
 
-  //for collection:
-  //load defaults
-  //get all goals
-  //get user
-
-  //for individual
-  //load from param
-
+  $scope.userName = DEFAULT_USER_NAME;
+  $scope.loadUser();
   if ($routeParams.goal) {
       $scope.loadFromParam();
   } else {
-    $scope.userName = DEFAULT_USER_NAME;
-    $scope.userId = DEFAULT_USER_ID;
-    $scope.userPoints = DEFAULT_USER_POINTS;
     $scope.loadDefaults();
-    $scope.loadUser();
-    $scope.getAll();
+    $scope.loadGoals();
   }
 
 

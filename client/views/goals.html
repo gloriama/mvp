@@ -1,6 +1,7 @@
 <!-- add new goal -->
 <header>
-  <p>User: {{ userName }}<p>
+  <p>User: <input ng-model="userName" />
+    <button ng-click="loadUser()">Change user</button><p>
   <p>"Treat Yo'self" Credits:
     <span class="positive">${{ userPoints/100 | number:2 }}</span>
   </p>

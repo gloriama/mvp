@@ -1,4 +1,4 @@
-angular.module('app', ['services', 'goal', 'ngRoute'])
+angular.module('app', ['services', 'goal', 'user', 'ngRoute'])
 .config(function($routeProvider, $httpProvider) {
   $routeProvider
   // .when('/', {
@@ -13,4 +13,8 @@ angular.module('app', ['services', 'goal', 'ngRoute'])
     templateUrl: 'views/goal.html',
     controller: 'goalCtrl'
   })
+  .when('/users', {
+    templateUrl: 'views/users.html',
+    controller: 'userCtrl'
+  });
 });

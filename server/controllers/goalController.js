@@ -4,20 +4,16 @@ module.exports = {
 
   add: function(req, res, next) {
     console.log("received POST request to /goals", req.body);
-    var name = req.body.name;
-    var freq = req.body.freq;
-    var points = req.body.points;
-    var timesDone = req.body.timesDone;
+    // var name = req.body.name;
+    // var freq = req.body.freq;
+    // var points = req.body.points;
+    // var timesDone = req.body.timesDone;
+    // var userId = req.body.userId;
     
-    (new Goal({
-      name: name,
-      freq: freq,
-      points: points,
-      timesDone: timesDone
-    })).save()
+    (new Goal(req.body)).save()
     .then(function(goal) {
       console.log("created new goal");
-      res.send(200);
+      res.json(goal);
     });
   },
 
@@ -28,6 +24,7 @@ module.exports = {
     var freq = req.body.freq;
     var points = req.body.points;
     var timesDone = req.body.timesDone;
+    var userId = req.body.userId;
 
     Goal.findOne({ _id: id }, function(err, goal) {
       if (err) {
@@ -37,10 +34,11 @@ module.exports = {
       goal.freq = freq;
       goal.points = points;
       goal.timesDone = timesDone;
+      goal.userId = userId;
       goal.save()
       .then(function(goal) {
         console.log("updated goal");
-        res.send(200);
+        res.json(goal);
       });
     });
   },
@@ -54,7 +52,7 @@ module.exports = {
 
       if (goals.length === 0) {
         console.log("goal doesn't exist");
-        res.send(200);
+        res.json({});
       } else {
         res.json(goals[0]);
       }

@@ -17,7 +17,7 @@ module.exports = {
     })).save()
     .then(function(user) {
       console.log("created new user");
-      res.send(200);
+      res.json(user);
     });
   },
 
@@ -40,7 +40,7 @@ module.exports = {
       user.save()
       .then(function(user) {
         console.log("updated user");
-        res.send(200);
+        res.json(user);
       });
     });
   },
@@ -58,7 +58,7 @@ module.exports = {
 
       if (users.length === 0) {
         console.log("user doesn't exist");
-        res.send(200);
+        res.send({});
       } else {
         res.json(users[0]);
       }
