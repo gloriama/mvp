@@ -1,0 +1,39 @@
+<!doctype html>
+<html ng-app="app">
+  <head>
+
+    <link rel="stylesheet" href="styles/styles.css">
+    <script src="lib/angular/angular.js"></script>
+    <script src="lib/angular-route/angular-route.js"></script>
+    <script src="services.js"></script>
+    <script src="app.js"></script>
+  </head>
+  <body ng-controller="goalCtrl">
+
+    <!-- add new goal -->
+    <input ng-model="goalName"/>
+    <input ng-model="goalFreq"/>
+    <input ng-model="goalPoints"/>
+    <button ng-click="add()">Submit</button>
+
+    <!-- print all goals -->
+    <table border="1">
+      <tr>
+        <th>Name</th>
+        <th>Times per week</th>
+        <th>Points per time</th>
+        <th>Did it!</th>
+        <th>Update</th>
+        <th>Delete</th>
+      </tr>
+      <tr ng-repeat="goal in storage">
+        <td>{{ goal.name }}</td>
+        <td>{{ goal.freq }}</td>
+        <td>{{ goal.points }}</td>
+        <td>{{ goal.timesDone }}</td>
+        <td><a href="#" ng-click="update()">Update</a></td>
+        <td><a href="#">Delete</a></td>
+      </tr>
+    </table>
+  </body>
+</html>

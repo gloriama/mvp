@@ -1,34 +1,22 @@
-<!doctype html>
-<html ng-app="app">
+<!-- taken from HR's Shortly Angular solution -->
+<!DOCTYPE html>
+<html ng-app='app'>
   <head>
-    <link rel="stylesheet" href="styles.css">
+    <meta charset="utf-8" />
+    <title>Habituate</title>
+    <link rel="stylesheet" type="text/css" href="styles/style.css" />
+  </head>
+  <body>
+    <!-- <h1>Habituate</h1> -->
+
+    <!-- the ng-view directive is where our templates will be loaded into when naviagted to -->
+    <div ng-view></div>
+
     <script src="lib/angular/angular.js"></script>
     <script src="lib/angular-route/angular-route.js"></script>
+
+    <script src="goalController.js"></script>
     <script src="services.js"></script>
     <script src="app.js"></script>
-  </head>
-  <body ng-controller="goalCtrl">
-
-    <!-- add new goal -->
-    <input ng-model="goalName"/>
-    <input ng-model="goalFreq"/>
-    <input ng-model="goalPoints"/>
-    <button ng-click="add()">Submit</button>
-
-    <!-- print all goals -->
-    <table border="1">
-      <tr>
-        <th>Name</th>
-        <th>Times per week</th>
-        <th>Points per time</th>
-        <th>Did it!</th>
-      </tr>
-      <tr ng-repeat="goal in storage">
-        <td>{{ goal.name }}</td>
-        <td>{{ goal.freq }}</td>
-        <td>{{ goal.points }}</td>
-        <td>{{ goal.timesDone }}</td>
-      </tr>
-    </table>
   </body>
 </html>
