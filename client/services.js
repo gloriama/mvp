@@ -1,89 +1,82 @@
 angular.module('services', [])
-.factory('Goals', function($http) {
-  var add = function(goal) {
-    console.log('adding goal', goal);
-    return $http({
-      method: 'POST',
-      url: '/goals',
-      data: goal
-    });
+.factory('AJAX', function($http) {
+  //sends an ajax request via $http, returns response
+  var sendReq = function(method, url, data) {
+    var options = {
+      method: method,
+      url: url
+    };
+    if (data) {
+      options.data = data;
+    }
+    return $http(options);
   };
 
-  var update = function(goal) {
-    console.log('updating goal', goal);
-    return $http({
-      method: 'POST',
-      url: '/goal/' + goal._id,
-      data: goal
-    }); 
+  return {
+    sendReq: sendReq
+  };
+})
+.factory('Goals', function(AJAX) {
+  var add = function(goal) {
+    // console.log('adding goal', goal);
+    return AJAX.sendReq('POST', '/goals', goal);
   };
 
   var getAll = function() {
     // console.log('getting all goals');
-    return $http({
-      method: 'GET',
-      url: '/goals',
-    });
+    return AJAX.sendReq('GET', '/goals');
   };
 
   var getOne = function(goalId) {
-    return $http({
-      method: 'GET',
-      url: '/goal/' + goalId
-    })
+    return AJAX.sendReq('GET', '/goal/' + goalId);
+  };
+
+  var update = function(goal) {
+    // console.log('updating goal', goal);
+    return AJAX.sendReq('POST', '/goal/' + goal._id, goal);
   };
 
   var deleteOne = function(goalId) {
-    return $http({
-      method: 'DELETE',
-      url: '/goal/' + goalId
-    })
+    return AJAX.sendReq('DELETE', '/goal/' + goalId);
   };
 
   return {
     add: add,
-    update: update,
     getAll: getAll,
     getOne: getOne,
+    update: update,
     deleteOne: deleteOne
   };
 })
-.factory('Users', function($http) {
+.factory('Users', function(AJAX) {
   var add = function(user) {
-    console.log('adding or updating user', user);
-    return $http({
-      method: 'POST',
-      url: '/users',
-      data: user
-    });
+    // console.log('adding user', user);
+    return AJAX.sendReq('POST', '/users', user);
   };
 
   var getAll = function() {
     // console.log('getting all users');
-    return $http({
-      method: 'GET',
-      url: '/users',
-    });
+    return AJAX.sendReq('GET', '/users');
   };
 
-  var getOne = function(userName) {
-    return $http({
-      method: 'GET',
-      url: '/user/' + userName
-    })
-  }
+  var getOne = function(userId) {
+    return AJAX.sendReq('GET', '/user/' + userId);
+  };
 
-  var deleteOne = function(userName) {
-    return $http({
-      method: 'DELETE',
-      url: '/user/' + userName
-    })
+  var update = function(user) {
+    // console.log('updating user', user);
+    return AJAX.sendReq('POST', '/user/' + user._id, user);
+  };
+
+  var deleteOne = function(userId) {
+    return AJAX.sendReq('DELETE', '/user/' + userId);
   };
 
   return {
     add: add,
     getAll: getAll,
     getOne: getOne,
+    update: update,
     deleteOne: deleteOne
   };
-});
+})
