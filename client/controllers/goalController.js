@@ -15,6 +15,7 @@ angular.module('goal', ['services'])
 
   // ---- Collection Page ----
   $scope.add = function() {
+    $scope.goalForm.$setUntouched();
     var goal = {
       name: $scope.goalName,
       freq: $scope.goalFreq,
