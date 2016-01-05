@@ -46,8 +46,12 @@ module.exports = {
   },
 
   getOne: function(req, res, next) {
-    var userId = req.path.substring("/user/".length);
-    User.find({ _id: userId }, function(err, users) {
+    var userIdOrName = req.path.substring("/user/".length);
+    //horrible check, but if length is under 15 chars, treat it as a name
+    var field = (userIdOrName.length < 15) ? 'name' : '_id';
+    var queryObj = {};
+    queryObj[field] = userIdOrName;
+    User.find(queryObj, function(err, users) {
       if (err) {
         return console.error(err);
       }

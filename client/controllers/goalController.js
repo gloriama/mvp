@@ -37,7 +37,7 @@ angular.module('goal', ['services'])
     return Goals.getAll()
     .then(function(resp) {
       var goals = resp.data;
-      console.log(goals);
+      //console.log(goals);
       $scope.storage = goals;
     });
   };
@@ -77,18 +77,21 @@ angular.module('goal', ['services'])
     }, 0);
   };
 
-  $scope.getUserPoints = function() {
-    Users.getOne($scope.userId)
+  $scope.loadUser = function() {
+    Users.getOne($scope.userName)
+    //hackily induces search by name instead of id when userName.length < 15
     .then(function(resp) {
       var user = resp.data;
       if (user.points) { //if user exists
+        $scope.userId = user._id;
         $scope.userPoints = user.points;
       } else {
-        $scope.userPoints = $scope.calculatePoints();
-        Users.add({
-          name: $scope.userName,
-          points: $scope.userPoints
-        });
+        console.log('user does not exist');
+        // $scope.userPoints = $scope.calculatePoints();
+        // Users.add({
+        //   name: $scope.userName,
+        //   points: $scope.userPoints
+        // });
       }
     });
   };
@@ -159,8 +162,8 @@ angular.module('goal', ['services'])
     $scope.userId = DEFAULT_USER_ID;
     $scope.userPoints = DEFAULT_USER_POINTS;
     $scope.loadDefaults();
+    $scope.loadUser();
     $scope.getAll();
-    $scope.getUserPoints();
   }
 
 
