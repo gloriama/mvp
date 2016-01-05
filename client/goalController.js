@@ -28,15 +28,22 @@ angular.module('goal', ['services'])
   };
 
   $scope.update = function($index) {
-    // console.log('redirecting to individual goal page for', $index);
     $location.path('/goal/' + $index);
-  }
+  };
+
+  $scope.delete = function($index) {
+    var currGoal = $scope.storage[$index];
+    Goals.deleteOne(currGoal.name)
+    .then(function() {
+      $scope.getAll();
+    });
+  };
 
   $scope.getAll = function() {
     return Goals.getAll()
     .then(function(resp) {
       var goals = resp.data;
-      console.log(goals);
+      //console.log(goals);
       $scope.storage = goals;
     });
   };

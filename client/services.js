@@ -1,7 +1,7 @@
 angular.module('services', [])
 .factory('Goals', function($http) {
   var add = function(goal) {
-    console.log('adding goal', goal);
+    // console.log('adding goal', goal);
     return $http({
       method: 'POST',
       url: '/goals',
@@ -10,15 +10,23 @@ angular.module('services', [])
   };
 
   var getAll = function() {
-    console.log('getting all goals');
+    // console.log('getting all goals');
     return $http({
       method: 'GET',
       url: '/goals',
     });
-  }
+  };
+
+  var deleteOne = function(goalName) {
+    return $http({
+      method: 'DELETE',
+      url: '/goal/' + goalName
+    })
+  };
 
   return {
     add: add,
-    getAll: getAll
+    getAll: getAll,
+    deleteOne: deleteOne
   };
 });

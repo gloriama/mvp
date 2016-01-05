@@ -20,6 +20,8 @@ app.get('/goals', goalController.getAll);
 
 app.post('/goals', goalController.add);
 
+app.delete('/goal/*', goalController.delete);
+
 app.use(express.static(__dirname + '/../client'));
 
 app.listen(app.get('port'), function() {
