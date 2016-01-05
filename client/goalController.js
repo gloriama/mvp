@@ -4,12 +4,7 @@ var DEFAULT_GOAL_POINTS = 10;
 var DEFAULT_GOAL_TIMES_DONE = 0;
 
 angular.module('goal', ['services'])
-.controller('goalCtrl', function($scope, $location, Goals) {
-  //temp properties used in view to store info for the new goal
-  $scope.goalName = DEFAULT_GOAL_NAME;
-  $scope.goalFreq = DEFAULT_GOAL_FREQ;
-  $scope.goalPoints = DEFAULT_GOAL_POINTS;
-
+.controller('goalCtrl', function($scope, $location, Goals, $routeParams) {
   $scope.storage = [];
 
   $scope.add = function() {
@@ -29,9 +24,7 @@ angular.module('goal', ['services'])
     });
 
     //reset defaults for temp properties to appear in view
-    $scope.goalName = DEFAULT_GOAL_NAME;
-    $scope.goalFreq = DEFAULT_GOAL_FREQ;
-    $scope.goalPoints = DEFAULT_GOAL_POINTS;
+    $scope.loadDefaults();
   };
 
   $scope.update = function() {
@@ -40,7 +33,7 @@ angular.module('goal', ['services'])
   }
 
   $scope.getAll = function() {
-    Goals.getAll()
+    return Goals.getAll()
     .then(function(resp) {
       var goals = resp.data;
       console.log(goals);
@@ -48,7 +41,31 @@ angular.module('goal', ['services'])
     });
   };
 
+  $scope.loadDefaults = function() {
+    $scope.goalName = DEFAULT_GOAL_NAME;
+    $scope.goalFreq = DEFAULT_GOAL_FREQ;
+    $scope.goalPoints = DEFAULT_GOAL_POINTS;
+  };
+
+  $scope.loadFromParam = function() {
+    console.log($scope.storage);
+    var currGoal = $scope.storage[$routeParams.goal];
+    console.log(currGoal);
+    $scope.goalName = currGoal.name;
+    $scope.goalFreq = currGoal.freq;
+    $scope.goalPoints = currGoal.points;
+  }
+
   //get all goals
-  $scope.getAll();
+  $scope.getAll()
+  .then(function() {
+    //temp properties used in view to store info for the new goal
+    if ($routeParams.goal) {
+      $scope.loadFromParam();
+    } else {
+      $scope.loadDefaults();
+    }
+  });
+
 
 });

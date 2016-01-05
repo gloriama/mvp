@@ -9,4 +9,8 @@ angular.module('app', ['services', 'goal', 'ngRoute'])
     templateUrl: 'goals.html',
     controller: 'goalCtrl'
   })
+  .when('/goal/:goal', {
+    templateUrl: 'goal.html',
+    controller: 'goalCtrl'
+  })
 });
