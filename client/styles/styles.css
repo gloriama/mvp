@@ -6,3 +6,11 @@ table {
 a:visited {
   color: blue;
 }
+
+.positive {
+  color: green;
+}
+
+.warning {
+  color: red;
+}

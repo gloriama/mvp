@@ -16,6 +16,7 @@ $<input ng-model="toUse" /><button ng-click="use()">Spend credit</button>
     <th>Name</th>
     <th>Times per week</th>
     <th>Points per time</th>
+    <th>Times done</th>
     <th>Did it!</th>
     <th>Update</th>
     <th>Delete</th>
@@ -24,8 +25,21 @@ $<input ng-model="toUse" /><button ng-click="use()">Spend credit</button>
     <td>{{ goal.name }}</td>
     <td>{{ goal.freq }}</td>
     <td>{{ goal.points }}</td>
-    <td ng-click="incrementTimesDone($index)">{{ goal.timesDone }}</td>
-    <td><button ng-click="redirectToUpdate(goal._id)">Update</button></td>
-    <td><button ng-click="delete(goal._id)">Delete</button></td>
+    <td>{{ goal.timesDone }}</td>
+    <td>
+      <button ng-click="incrementTimesDone($index)" class="positive">
+        Did it!
+      </button>
+    </td>
+    <td>
+      <button ng-click="redirectToUpdate(goal._id)">
+        Update
+      </button>
+    </td>
+    <td>
+      <button ng-click="delete(goal._id)" class="warning">
+        Delete
+      </button>
+    </td>
   </tr>
 </table>
