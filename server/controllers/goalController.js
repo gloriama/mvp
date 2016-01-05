@@ -22,16 +22,13 @@ module.exports = {
         if (err) {
           return console.error(err);
         }
-        console.log("goal found, updating");
         goal.name = name;
         goal.freq = freq;
         goal.points = points;
         goal.timesDone = timesDone;
         goal.save()
-        .then(function(err, goal) {
-          if (err) {
-            return console.error(err);
-          }
+        .then(function(goal) {
+          console.log("updated goal");
           res.send(200);
         });
       });
@@ -41,10 +38,8 @@ module.exports = {
         freq: freq,
         points: points,
         timesDone: timesDone
-      })).save(function(err, goal) {
-        if (err) {
-          return console.error(err);
-        }
+      })).save()
+      .then(function(goal) {
         console.log("created new goal");
         res.send(200);
       });
