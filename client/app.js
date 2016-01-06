@@ -1,10 +1,6 @@
 angular.module('app', ['services', 'goal', 'user', 'ngRoute'])
 .config(function($routeProvider, $httpProvider) {
   $routeProvider
-  // .when('/', {
-  //   templateUrl: 'goals.html',
-  //   controller: 'goalCtrl'
-  // })
   .when('/goals', {
     templateUrl: 'views/goals.html',
     controller: 'goalCtrl'
@@ -16,5 +12,8 @@ angular.module('app', ['services', 'goal', 'user', 'ngRoute'])
   .when('/users', {
     templateUrl: 'views/users.html',
     controller: 'userCtrl'
+  })
+  .otherwise({
+    redirectTo: '/goals'
   });
 });
