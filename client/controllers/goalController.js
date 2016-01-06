@@ -81,6 +81,8 @@ angular.module('goal', ['services'])
     }, 0);
   };
 
+  //initialize user-related scope items
+  //needed in both collection and individual pages
   $scope.loadUser = function() {
     $scope.userName = $scope.userNameBox;
     $window.localStorage.setItem('habituate.user.name', $scope.userName);
@@ -161,8 +163,8 @@ angular.module('goal', ['services'])
     });
   };
 
-  $scope.userNameBox = $window.localStorage.getItem('habituate.user.name') || DEFAULT_USER_NAME;
-  $scope.userName = $scope.userNameBox;
+  $scope.userName = $window.localStorage.getItem('habituate.user.name') || DEFAULT_USER_NAME;
+  $scope.userNameBox = $scope.userName;
   $scope.loadUser();
   if ($routeParams.goal) {
       $scope.loadFromParam();
