@@ -11,6 +11,18 @@ table.individual {
 
 }
 
+table.control th {
+  text-align: right;
+}
+
+table.control th,
+table.control td {
+  padding: 10px;
+}
+table.control td.auxiliary {
+  padding-left: 100px;
+}
+
 a:visited {
   color: blue;
 }

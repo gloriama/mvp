@@ -82,6 +82,7 @@ angular.module('goal', ['services'])
   };
 
   $scope.loadUser = function() {
+    $scope.userName = $scope.userNameBox;
     $window.localStorage.setItem('habituate.user.name', $scope.userName);
     Users.getOne($scope.userName)
     //hackily induces search by name instead of id when userName.length < 15
@@ -160,7 +161,8 @@ angular.module('goal', ['services'])
     });
   };
 
-  $scope.userName = $window.localStorage.getItem('habituate.user.name') || DEFAULT_USER_NAME;
+  $scope.userNameBox = $window.localStorage.getItem('habituate.user.name') || DEFAULT_USER_NAME;
+  $scope.userName = $scope.userNameBox;
   $scope.loadUser();
   if ($routeParams.goal) {
       $scope.loadFromParam();

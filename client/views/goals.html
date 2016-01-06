@@ -1,16 +1,29 @@
-<!-- add new goal -->
 <header>
   <form name="userForm" novalidate>
-    <p>User: <input ng-model="userName" />
-      <button ng-click="loadUser()">Change user</button>
-    </p>
-    <p>"Treat Yo'self" Credits:
-      <span class="positive">${{ userPoints/100 | number:2 }}</span>
-    </p>
-    <p>
-      $<input name="toUse" type="number" ng-model="toUse" placeholder="0.00" ng-pattern="/^[0-9]*(\.[0-9]{1,2})?$/" max={{userPoints/100}}/><button ng-click="usePoints()">Spend credit</button>
-    </p>
+    <table class="control">
+      <tr>
+        <th>User:</th>
+        <td>{{ userName }}</td>
+        <td class="auxiliary">
+          <input name="userNameBox" ng-model="userNameBox" required />
+          <button ng-click="loadUser()" ng-disabled="userForm.userNameBox.$invalid">Change user</button>
+        </td>
+      </tr>
+      <tr>
+        <th>"Treat Yo'self" Fund:</th>
+        <td>
+          <span class="positive">${{ userPoints/100 | number:2 }}</span>
+        </td>
+        <td class="auxiliary">
+          $<input name="toUse" type="number" ng-model="toUse" placeholder="0.00" ng-pattern="/^[0-9]*(\.[0-9]{1,2})?$/" max={{userPoints/100}}/>
+          <button ng-click="usePoints()" ng-disabled="userForm.toUse.$invalid">Spend credit</button>
+        </td>
+      </tr>
+    </table>
     <!-- start Validation -->
+    <div class="warning" ng-show="userForm.userNameBox.$invalid">
+      Please enter user name
+    </div>
     <div class="warning" ng-show="userForm.toUse.$invalid && !userForm.toUse.$error.max">
       Please enter valid value (positive, up to 2 decimals)
     </div>
@@ -20,22 +33,23 @@
   </form>
 </header>
 
+<!-- add new goal -->
 <h2>Add new goal</h2>
 <form name="goalForm" novalidate>
   <table>
     <tr>
       <td>Name:</td>
       <td><input name="goalName" ng-model="goalName" required/></td>
-      <td>Times per week:</td>
+      <td>Times per week:</tg>
       <td><input name="goalFreq" type="number" ng-model="goalFreq" ng-pattern="/^[0-9]*$/"/></td>
       <td>Points earned per time:</td>
       <td><input name="goalPoints" type="number" ng-model="goalPoints" required min="0"/></td>
-      <td><button ng-click="add()">Submit</button></td>
+      <td><button ng-click="add()" ng-disabled="goalForm.$invalid">Submit</button></td>
     </tr>
   </table>
   <!-- start Validation -->
   <div class="warning" ng-show="goalForm.goalName.$touched && goalForm.goalName.$invalid">
-    Please enter name
+    Please enter goal name
   </div>
   <div class="warning" ng-show="goalForm.goalFreq.$invalid">
     Please enter valid frequency (positive integer)
